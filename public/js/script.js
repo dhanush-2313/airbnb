@@ -16,3 +16,28 @@
         }, false)
     })
 })()
+
+document.querySelectorAll('.read-more').forEach(button => {
+  const reviewText = button.previousElementSibling;
+  const lineHeight = parseFloat(getComputedStyle(reviewText)['line-height']);
+  const maxHeight = lineHeight * 3;
+
+  reviewText.style.height = `${maxHeight}px`;
+  reviewText.style.overflow = 'visible';
+
+  if (reviewText.scrollHeight > maxHeight) {
+    button.style.display = 'block';
+  }
+
+  reviewText.style.overflow = 'hidden';
+
+  button.addEventListener('click', () => {
+    if (reviewText.style.height !== 'auto') {
+      reviewText.style.height = 'auto';
+      button.textContent = 'Read Less';
+    } else {
+      reviewText.style.height = `${maxHeight}px`;
+      button.textContent = 'Read More';
+    }
+  });
+});
