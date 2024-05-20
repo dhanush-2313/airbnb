@@ -33,7 +33,7 @@ router.delete("/:reviewId", wrapAsync(async (req, res) => {
     let { id, reviewId } = req.params;
     await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
     await Review.findByIdAndDelete(reviewId);
-    req.flash('deletee', 'Successfully deleted a review!');
+    req.flash('error', 'Successfully deleted a review!');
     res.redirect(`/listings/${id}`);
 }));
 
