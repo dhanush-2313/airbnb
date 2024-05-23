@@ -41,3 +41,15 @@ document.querySelectorAll('.read-more').forEach(button => {
     }
   });
 });
+
+function checkFileSize(input) {
+  // Get the selected file
+  const file = input.files[0];
+
+  // Check the file size
+  if (file.size > 5 * 1024 * 1024) { // 5MB
+      // If the file is too large, show an alert and clear the input field
+      alert("File size limit exceeded. Please select a file smaller than 5MB.");
+      input.value = "";
+  }
+}

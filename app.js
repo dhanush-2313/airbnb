@@ -15,6 +15,7 @@ const flash = require('connect-flash');
 const passport = require('passport');
 const localStrategy = require('passport-local');
 const User = require('./models/user.js');
+const multer = require('multer');
 const port = 3000;
 
 const listingRouter = require('./routes/listing.js');
@@ -90,8 +91,12 @@ app.all('*', (req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
+    if (err instanceof multer.MulterError && err.code === 'LIMIT_FILE_SIZE') {
+        return res.status(400).json({ error: 'File size limit exceeded' });
+    }
     let { status = 500, message = "There was some error" } = err;
     res.status(status).render("listings/error.ejs", { err });
+
 });
 
 app.listen(port, () => {
