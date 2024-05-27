@@ -36,6 +36,10 @@ const listingSchema = new Schema({
       required: true,
     },
   },
+  category:{
+    type:String,
+    enum:['Trending', 'Rooms', 'Iconic Cities','Mountains','Amazing Pools','Camping','Farms','Arctic']
+  }
 });
 
 //for deleting reviews when a listing is deleted(mongoose middleware)

@@ -60,3 +60,41 @@ styles.forEach((style, index) => {
     // Add the style div to the style selector
     styleSelector.appendChild(styleDiv);
 });
+
+map.on('load', function () {
+    map.loadImage(
+        'https://path-to-your-icon/home-icon.png', // replace this with the path to your icon
+        function (error, image) {
+            if (error) throw error;
+            map.addImage('home-icon', image);
+
+            // Add a GeoJSON source with your features
+            map.addSource('points', {
+                'type': 'geojson',
+                'data': {
+                    'type': 'FeatureCollection',
+                    'features': [
+                        {
+                            'type': 'Feature',
+                            'geometry': {
+                                'type': 'Point',
+                                'coordinates': [0, 0] // replace this with your coordinates
+                            }
+                        }
+                    ]
+                }
+            });
+
+            // Add a layer to use the image to represent the data
+            map.addLayer({
+                'id': 'points',
+                'type': 'symbol',
+                'source': 'points',
+                'layout': {
+                    'icon-image': 'home-icon',
+                    'icon-size': 0.25
+                }
+            });
+        }
+    );
+});

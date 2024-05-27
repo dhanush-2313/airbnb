@@ -7,6 +7,20 @@ const listingController = require('../controllers/listings');
 const multer = require('multer');
 const { storage } = require('../cloudConfig');
 const upload = multer({ storage });
+const fs = require('fs');
+const path = require('path');
+
+router.get('/favicon.ico', (req, res) => {
+    const faviconPath = path.join(__dirname, 'public', 'favicon.ico');
+
+    fs.access(faviconPath, fs.constants.F_OK, (err) => {
+        if (err) {
+            res.status(204).end();
+        } else {
+            res.sendFile(faviconPath);
+        }
+    });
+});
 
 
 //index and create routes
