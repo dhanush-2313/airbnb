@@ -1,4 +1,7 @@
 <%layout("/layouts/boilerplate") %>
+<script>
+  const mapToken = "<%= process.env.MAP_TOKEN %>";
+</script>
 <div class="row mt-3 mx-auto">
   <div class="col-8 mx-auto">
     <h3><%=listing.title %></h3>
@@ -35,7 +38,7 @@
 
 
 <div class="col-8 mx-auto mb-3">
-    <hr>
+    
     <% if(currUser){ %>
     <h4>Leave a Review</h4>
     <form action="/listings/<%=listing.id%>/reviews" method="POST" novalidate class="needs-validation">
@@ -68,8 +71,9 @@
     </form>
     <% } %>
 
-    <p><b>All reviews</b></p>
+    <% if(listing.reviews.length > 0){ %>
     <div class="row">
+      <p><b>All reviews</b></p>
       <% for(review of listing.reviews){  %>
        <div class="card col-5 ms-3 mb-3" style="border: 1px solid rgba(0, 0, 0, 0.2) !important;"> 
         <div class="card-body">
@@ -87,3 +91,13 @@
       </div>
       <% } %> 
   </div>
+  <% } %>
+  <hr/>
+
+<div class="mb-3 mt-3">
+  <h3>Where you'll be</h3>
+  <div id="map"></div>
+  
+</div>
+
+<script src="/js/map.js"></script>
