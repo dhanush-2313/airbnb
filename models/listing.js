@@ -25,6 +25,17 @@ const listingSchema = new Schema({
     type:Schema.Types.ObjectId,
     ref:"User"
   },
+  geometry: {
+    type: {
+      type: String,
+      enum: ["Point"],
+      required: true,
+    },
+    coordinates: {
+      type: [Number],
+      required: true,
+    },
+  },
 });
 
 //for deleting reviews when a listing is deleted(mongoose middleware)
