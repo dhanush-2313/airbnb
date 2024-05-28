@@ -46,7 +46,11 @@ npm install
 
 Add users first by creating users using the signup button then run the index.js file inside the init folder.
 
-### Step 4: Start the Application
+### Step 4: Configure Cloudinary and MapBox
+
+Sign up for a Cloudinary account and obtain your API key and secret. Update the Cloudinary configuration in the .env file, same applies for mapbox too.
+
+### Step 5: Start the Application
 
 ```bash
 node app.js
