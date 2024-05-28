@@ -44,7 +44,7 @@ npm install
 
 ### Step 3: Set Up the Database
 
-Add users first by signingIn multiple times then run the index.js file inside the init folder.
+Add users first by creating users using the signup button then run the index.js file inside the init folder.
 
 ### Step 4: Start the Application
 
