@@ -95,4 +95,3 @@ For any questions or feedback, please contact:
 
 - Dhanush
 - [GitHub Profile](https://github.com/dhanush-2313)
-- Email: dhanush@example.com
