@@ -10,31 +10,19 @@ const upload = multer({ storage });
 const fs = require('fs');
 const path = require('path');
 
-router.get('/favicon.ico', (req, res) => {
-    const faviconPath = path.join(__dirname, 'public', 'favicon.ico');
-
-    fs.access(faviconPath, fs.constants.F_OK, (err) => {
-        if (err) {
-            res.status(204).end();
-        } else {
-            res.sendFile(faviconPath);
-        }
-    });
-});
-
 
 //index and create routes
 router.route("/")
     .get(wrapAsync(listingController.index))
-    .post(isLoggedIn, upload.single('listing[image]'),validateListing, wrapAsync(listingController.createListing));
+    .post(isLoggedIn, upload.single('listing[image]'), validateListing, wrapAsync(listingController.createListing));
 
 //NEW route
-router.get("/new", isLoggedIn, (listingController.renderNewForm));
+router.get("/new", isLoggedIn, listingController.renderNewForm);
 
 //show, update, and delete routes
 router.route("/:id")
     .get(wrapAsync(listingController.showListing))
-    .put(isLoggedIn, isOwner, upload.single('listing[image]'),validateListing, wrapAsync(listingController.updateListing))
+    .put(isLoggedIn, isOwner, upload.single('listing[image]'), validateListing, wrapAsync(listingController.updateListing))
     .delete(isLoggedIn, isOwner, wrapAsync(listingController.deleteListing));
 
 //edit route

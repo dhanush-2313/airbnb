@@ -21,9 +21,9 @@ const listingSchema = new Schema({
       ref: "Review",
     },
   ],
-  owner:{
-    type:Schema.Types.ObjectId,
-    ref:"User"
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: "User"
   },
   geometry: {
     type: {
@@ -36,9 +36,9 @@ const listingSchema = new Schema({
       required: true,
     },
   },
-  category:{
-    type:String,
-    enum:['Trending', 'Rooms', 'Iconic Cities','Mountains','Amazing Pools','Camping','Farms','Arctic']
+  category: {
+    type: String,
+    enum: ['Trending', 'Rooms', 'Iconic Cities', 'Mountains', 'Amazing Pools', 'Camping', 'Farms', 'Arctic']
   }
 });
 

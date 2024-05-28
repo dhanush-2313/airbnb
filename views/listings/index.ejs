@@ -8,6 +8,7 @@
   }
 
   .filter{
+    flex:1 0 auto;
     text-align: center;
     margin-right: 2rem;
     margin-top: 2rem;
@@ -26,59 +27,65 @@
   .taxInfo{
     display: none;
   }
+
+  a{
+    text-decoration: none !important;
+    color: black !important;
+  }
   
   .taxToggle{
+    display:inline-block;
     border : 1px solid black;
     border-radius: 1rem;
     height: 3.25rem;
     padding: 1rem;
-    margin-left: 5rem;
+    /* margin-left: 5rem; */
     display: flex;
     align-items: center;
   }
 
 </style>
 <div id="filters">
-  <div class="filter">
+  <a href="/listings?category=Trending" class="filter">
    <div> <i class="fa-solid fa-fire"></i></div>
     <p>Trending</p>  
-  </div>
-  <div class="filter">
+  </a>
+  <a href="/listings?category=Rooms" class="filter">
     <div><i class="fa-solid fa-bed"></i></div>
     <p>Rooms</p>
-</div>
-<div class="filter">
+  </a>
+<a href="/listings?category=Iconic%20Cities" class="filter">
   <div><i class="fa-solid fa-mountain-city"></i></div>
   <p>Iconic Cities</p>
-</div>
-<div class="filter">
+</a>
+<a href="/listings?category=Mountains" class="filter">
   <div><i class="fa-solid fa-mountain-sun"></i></div>
   <p>Mountains</p>
-</div>
-<div class="filter">
+</a>
+<a href="/listings?category=Amazing%20Pools" class="filter">
   <div><i class="fa-solid fa-person-swimming"></i></div>
   <p>Amazing Pools</p>
-</div>
-<div class="filter">
+</a>
+<a href="/listings?category=Camping" class="filter">
   <div><i class="fa-solid fa-tents"></i></div>
   <p>Camping</p>
-</div>
-<div class="filter">
+</a>
+<a href="/listings?category=Farms" class="filter">
   <div><i class="fa-solid fa-cow"></i></div>
   <p>Farms</p>
-</div>
-<div class="filter">
+</a>
+<a href="/listings?category=Arctic" class="filter">
   <div><i class="fa-solid fa-snowflake"></i></div>
   <p>Arctic</p>
-</div>
-<div class="filter">
+</a>
+<a href="/listings?category=Domes" class="filter">
   <div><i class="fa-solid fa-igloo"></i></div>
   <p>Domes</p>
-</div>
-<div class="filter">
+</a>
+<a href="/listings?category=Boats" class="filter">
   <div><i class="fa-solid fa-ship"></i></div>
   <p>Boats</p>
-</div>
+</a>
 <div class="taxToggle">
   <div class="form-check-reverse form-switch">
     <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">

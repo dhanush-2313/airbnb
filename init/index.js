@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const initData = require("./data.js");
 const Listing = require("../models/listing.js");
+const User = require('../models/user.js'); // replace with the path to your User model
 
 const mongoUrl = "mongodb://localhost:27017/wanderLust";
 async function main() {
@@ -17,9 +18,28 @@ main()
 
 const initDB = async () => {
   await Listing.deleteMany({});
-  initData.data=initData.data.map((obj)=>({...obj,owner: "664cce6f897f85ddbd667ac6"}));
-  await Listing.insertMany(initData.data);
-  console.log("data was initialized");
+  let data = await initData(); // get the data from initData
+
+  // Fetch all users
+  const users = await User.find({});
+  if (users.length === 0) {
+    console.error('No users found');
+    return;
+  }
+
+  // For each listing, assign a random user's _id to the owner field
+  data = data.map((obj) => {
+    const randomIndex = Math.floor(Math.random() * users.length);
+    return { ...obj, owner: users[randomIndex]._id };
+  });
+
+  await Listing.insertMany(data);
 };
 
-initDB();
+initDB()
+  .then(() => {
+    console.log("Database was initialized");
+  })
+  .catch((err) => {
+    console.error(err);
+  });

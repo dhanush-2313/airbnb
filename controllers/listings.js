@@ -3,11 +3,24 @@ const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
 const mapToken = process.env.MAP_TOKEN;
 const geocodingClient = mbxGeocoding({ accessToken: mapToken });
 
-
 module.exports.index = async (req, res) => {
-    let listings = await Listing.find({});
-    res.render("listings/index.ejs", { listings })
+    const { search, category } = req.query;
+    let listings;
+    if (search) {
+        const regex = new RegExp(search, 'i');
+        listings = await Listing.find({ name: regex });
+    } else if (category) {
+        listings = await Listing.find({ category });
+    } else {
+        listings = await Listing.find({});
+    }
+    res.render("listings/index.ejs", { listings });
 };
+
+// Function to escape special characters in the search string
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+}
 
 module.exports.renderNewForm = (req, res) => {
     res.render("listings/new.ejs");
@@ -15,7 +28,9 @@ module.exports.renderNewForm = (req, res) => {
 
 module.exports.showListing = async (req, res) => {
     let { id } = req.params;
-    const listing = await Listing.findById(id).populate({ path: 'reviews', populate: { path: 'author' } });
+    const listing = await Listing.findById(id)
+        .populate({ path: 'reviews', populate: { path: 'author' } })
+        .populate('owner'); // Add this line
     if (!listing) {
         req.flash('error', 'Listing you requested for does not exist!');
         res.redirect('/listings');
@@ -61,13 +76,13 @@ module.exports.renderEditForm = async (req, res) => {
 module.exports.updateListing = async (req, res) => {
     let { id } = req.params;
     let listing = await Listing.findByIdAndUpdate(id, { ...req.body.listing });
-    if(typeof req.file !== 'undefined'){
+    if (typeof req.file !== 'undefined') {
         let url = req.file.path;
         let filename = req.file.filename;
         listing.image = { url, filename };
         await listing.save();
     }
-    
+
     req.flash('success', 'Listing updated successfully!');
     res.redirect(`/listings/${id}`);
 };

@@ -73,7 +73,7 @@ body {
 .card-img-top {
   border-radius: 1rem !important;
   width: 100% !important;
-  object-fit:cover !important;
+  object-fit: cover !important;
 }
 
 .card-body {
@@ -127,7 +127,14 @@ body {
 
 /* map  */
 
-#map{
+#map {
   height: 400px;
   width: 92vh;
+}
+
+@media screen and (max-width: 768px) {
+  .review-thingy {
+    width: 100%;
+    /* Adjust this value as needed */
+  }
 }
