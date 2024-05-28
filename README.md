@@ -6,7 +6,6 @@ WanderLust is a comprehensive vacation rental platform built using the MVC archi
 
 - User Authentication and Authorization
 - Property Listings
-- Booking System
 - Reviews and Ratings
 - Search and Filtering
 - Mapbox Integration for Location Display
