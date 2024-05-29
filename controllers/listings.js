@@ -3,12 +3,17 @@ const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
 const mapToken = process.env.MAP_TOKEN;
 const geocodingClient = mbxGeocoding({ accessToken: mapToken });
 
+
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+}
+
 module.exports.index = async (req, res) => {
     const { search, category } = req.query;
     let listings;
     if (search) {
-        const regex = new RegExp(search, 'i');
-        listings = await Listing.find({ name: regex });
+        const regex = new RegExp(escapeRegex(search), 'i');
+        listings = await Listing.find({ title: regex });
     } else if (category) {
         listings = await Listing.find({ category });
     } else {
@@ -75,16 +80,19 @@ module.exports.renderEditForm = async (req, res) => {
 
 module.exports.updateListing = async (req, res) => {
     let { id } = req.params;
-    let listing = await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+    const geodata = await geocodingClient.forwardGeocode({
+        query: req.body.listing.location,
+        limit: 1
+    }).send();
+    let listing = await Listing.findByIdAndUpdate(id, { ...req.body.listing, geometry: geodata.body.features[0].geometry });
     if (typeof req.file !== 'undefined') {
         let url = req.file.path;
         let filename = req.file.filename;
         listing.image = { url, filename };
-        await listing.save();
     }
-
+    await listing.save();
     req.flash('success', 'Listing updated successfully!');
-    res.redirect(`/listings/${id}`);
+    res.redirect(`/listings/${listing._id}`);
 };
 
 module.exports.deleteListing = async (req, res) => {

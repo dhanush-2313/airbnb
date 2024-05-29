@@ -1,5 +1,8 @@
 const axios = require('axios');
-const mapboxToken = "add your mapbox token here";
+if (process.env.NODE_ENV != 'production') {
+  require('dotenv').config();
+}
+const mapboxToken = process.env.MAP_TOKEN;
 async function getCoordinates(location) {
   const response = await axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(location)}.json?access_token=${mapboxToken}`);
   return response.data.features[0].geometry.coordinates;
