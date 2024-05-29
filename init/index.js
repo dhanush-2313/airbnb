@@ -2,10 +2,11 @@ const mongoose = require("mongoose");
 const initData = require("./data.js");
 const Listing = require("../models/listing.js");
 const User = require('../models/user.js'); // replace with the path to your User model
+const dbUrl = process.env.ATLASDB_URL; // for cloud db
 
-const mongoUrl = "mongodb://localhost:27017/wanderLust";
+// const mongoUrl = "mongodb://localhost:27017/dbUrl";
 async function main() {
-  await mongoose.connect(mongoUrl);
+  await mongoose.connect(dbUrl);
 }
 
 main()
